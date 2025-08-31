@@ -4,7 +4,7 @@ USER matrix0523
 LABEL maintainer="SunshineCloud"
 LABEL description="Dockerfile for building xrdp with pulseaudio support"
 # Install packages
-ADD sources/sources-bookworm.list /etc/apt/sources.list
+# ADD sources/sources-bookworm.list /etc/apt/sources.list
 ENV DEBIAN_FRONTEND=noninteractive
 # RUN sudo sed -i "s/# deb-src/deb-src/g" /etc/apt/sources.list
 RUN sudo apt-get -y update

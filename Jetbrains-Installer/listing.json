@@ -1,0 +1,16 @@
+{
+  "CLion": "https://download.jetbrains.com/cpp/CLion-${version}.tar.gz",
+  "DataGrip": "https://download.jetbrains.com/datagrip/datagrip-${version}.tar.gz",
+  "DataSpell": "https://download.jetbrains.com/python/dataspell-${version}.tar.gz",
+  "GoLand": "https://download.jetbrains.com/go/goland-${version}.tar.gz",
+  "IDEA-Ultimate": "https://download.jetbrains.com/idea/ideaIU-${version}.tar.gz",
+  "IDEA-Community": "https://download.jetbrains.com/idea/ideaIC-${version}.tar.gz",
+  "PhpStorm": "https://download.jetbrains.com/webide/PhpStorm-${version}.tar.gz",
+  "PyCharm": "https://download.jetbrains.com/python/pycharm-professional-${version}.tar.gz",
+  "PyCharm-Community": "https://download.jetbrains.com/python/pycharm-community-${version}.tar.gz",
+  "Rider": "https://download.jetbrains.com/rider/JetBrains.Rider-${version}.tar.gz",
+  "RubyMine": "https://download.jetbrains.com/ruby/RubyMine-${version}.tar.gz",
+  "RustRover": "https://download.jetbrains.com/rustrover/RustRover-${version}.tar.gz",
+  "WebStorm": "https://download.jetbrains.com/webstorm/WebStorm-${version}.tar.gz",
+  "tets-ce": "https://download.jetbrains.com/webstorm/WebStorm-${version}.tar.gz"
+}

@@ -1,0 +1,12 @@
+[Desktop Entry]
+
+Type=Application
+Version=1.0
+Name=JetBrains WebStorm
+Comment=JetBrains IDE for JavaScript
+Path=/SunshineCloud/Jetbrains/WebStorm/
+Exec=/SunshineCloud/Jetbrains/WebStorm/bin/webstorm.sh
+Icon=WebStorm
+Terminal=false
+Categories=Development
+StartupWMClass=webstorm

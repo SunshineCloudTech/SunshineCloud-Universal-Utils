@@ -1,0 +1,12 @@
+[Desktop Entry]
+
+Type=Application
+Version=1.0
+Name=JetBrains IntelliJ IDEA Community
+Comment=JetBrains IDE for Java
+Path=/SunshineCloud/Jetbrains/IDEA-Community/
+Exec=/SunshineCloud/Jetbrains/IDEA-Community/bin/idea.sh
+Icon=IDEA-Community
+Terminal=false
+Categories=Development
+StartupWMClass=intellij-idea-community

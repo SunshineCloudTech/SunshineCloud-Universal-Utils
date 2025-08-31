@@ -1,0 +1,12 @@
+[Desktop Entry]
+
+Type=Application
+Version=1.0
+Name=JetBrains IntelliJ IDEA Ultimate
+Comment=JetBrains IDE for Java
+Path=/SunshineCloud/Jetbrains/IDEA-Ultimate/
+Exec=/SunshineCloud/Jetbrains/IDEA-Ultimate/bin/idea.sh
+Icon=IDEA-Ultimate
+Terminal=false
+Categories=Development
+StartupWMClass=intellij-idea-ultimate

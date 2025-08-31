@@ -1,0 +1,12 @@
+[Desktop Entry]
+
+Type=Application
+Version=1.0
+Name=JetBrains DataSpell
+Comment=JetBrains Data Analysis Toolkit
+Path=/SunshineCloud/Jetbrains/DataSpell/
+Exec=/SunshineCloud/Jetbrains/DataSpell/bin/dataspell.sh
+Icon=DataSpell
+Terminal=false
+Categories=Development
+StartupWMClass=jetbrains-dataspell

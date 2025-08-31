@@ -1,0 +1,12 @@
+[Desktop Entry]
+
+Type=Application
+Version=1.0
+Name=JetBrains RustRover
+Comment=JetBrains IDE for Rust
+Path=/SunshineCloud/Jetbrains/RustRover/
+Exec=/SunshineCloud/Jetbrains/RustRover/bin/rustrover.sh
+Icon=RustRover
+Terminal=false
+Categories=Development
+StartupWMClass=rustrover

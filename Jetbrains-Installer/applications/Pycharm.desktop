@@ -1,0 +1,12 @@
+[Desktop Entry]
+
+Type=Application
+Version=1.0
+Name=JetBrains PyCharm
+Comment=JetBrains IDE for Python
+Path=/SunshineCloud/Jetbrains/PyCharm/
+Exec=/SunshineCloud/Jetbrains/PyCharm/bin/pycharm.sh
+Icon=PyCharm
+Terminal=false
+Categories=Development
+StartupWMClass=pycharm

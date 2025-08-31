@@ -1,0 +1,12 @@
+[Desktop Entry]
+
+Type=Application
+Version=1.0
+Name=JetBrains PhpStorm
+Comment=JetBrains IDE for PHP
+Path=/SunshineCloud/Jetbrains/PhpStorm/
+Exec=/SunshineCloud/Jetbrains/PhpStorm/bin/phpstorm.sh
+Icon=PhpStorm
+Terminal=false
+Categories=Development
+StartupWMClass=phpstorm

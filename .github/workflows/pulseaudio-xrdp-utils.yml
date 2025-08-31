@@ -1,0 +1,143 @@
+name: Build PulseAudio XRDP Utils
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allow manual triggering
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  build-xrdp-utils:
+    runs-on: ubuntu-latest
+    
+    steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+
+        - name: "Optimize Disk Space"
+          uses: "hugoalh/disk-space-optimizer-ghaction@v0.8.0"
+          with:
+            operate_sudo: "True"
+            general_include: ".+"
+            docker_include: ".+"
+            docker_prune: "True"
+            docker_clean: "True"
+            apt_prune: "True"
+            apt_clean: "True"
+            homebrew_prune: "True"
+            homebrew_clean: "True"
+            npm_prune: "True"
+            npm_clean: "True"
+            os_swap: "True"
+
+        - name: Set up QEMU
+          uses: docker/setup-qemu-action@v3
+
+        - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v3
+
+        - name: Get current date and time
+          id: datetime
+          run: |
+            echo "timestamp=$(date +%Y%m%d_%H%M%S)" >> $GITHUB_OUTPUT
+            echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
+            echo "commit_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+        # - name: Login to Docker Hub
+        #   uses: docker/login-action@v3
+        #   with:
+        #     registry: docker.io
+        #     username: ${{ secrets.DOCKER_USERNAME }}
+        #     password: ${{ secrets.DOCKER_PASSWORD }}
+
+        - name: Build XRDP with PulseAudio support
+          run: |
+            # Build the Docker image with the XRDP and PulseAudio modules
+            docker build -f .github/workflows/Dockerfile -t xrdp-builder .
+            
+            # Create a container to extract the built files
+            docker create --name xrdp-temp xrdp-builder
+            
+            # Create output directory
+            mkdir -p build-output
+            
+            # Extract the compiled libraries
+            docker cp xrdp-temp:/tmp/so/ build-output/pulseaudio-modules/
+            
+            # Clean up
+            docker rm xrdp-temp
+            docker rmi xrdp-builder
+
+        - name: Create package archive
+          run: |
+            cd build-output
+            
+            # Create archive with all built components
+            tar -czf ../pulseaudio-xrdp-utils-${{ steps.datetime.outputs.timestamp }}.tar.gz \
+              pulseaudio-modules/ 
+
+            cd ..
+            
+            # Calculate checksums
+            sha256sum pulseaudio-xrdp-utils-${{ steps.datetime.outputs.timestamp }}.tar.gz > checksums.sha256
+            
+            # List created files
+            ls -la
+            cat checksums.sha256
+
+        - name: Upload Build Artifacts
+          uses: actions/upload-artifact@v4
+          with:
+            name: pulseaudio-xrdp-utils-${{ steps.datetime.outputs.timestamp }}
+            path: |
+              pulseaudio-xrdp-utils-${{ steps.datetime.outputs.timestamp }}.tar.gz
+              checksums.sha256
+            retention-days: 30
+
+        - name: Create Release
+          if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
+          uses: softprops/action-gh-release@v2
+          with:
+            files: |
+              pulseaudio-xrdp-utils-${{ steps.datetime.outputs.timestamp }}.tar.gz
+              checksums.sha256
+            body: |
+              ## 🔊 PulseAudio XRDP Utils Build
+              
+              **Build Date:** ${{ steps.datetime.outputs.date }}
+              **Commit SHA:** ${{ steps.datetime.outputs.commit_sha }}
+              **Build Files:**
+              
+              - 📦 `pulseaudio-xrdp-utils-${{ steps.datetime.outputs.timestamp }}.tar.gz` - Complete XRDP and PulseAudio modules
+              - 🛠️ `install-xrdp-utils.sh` - Installation script
+              - 🔐 `checksums.sha256` - SHA256 checksums for verification
+              
+              ### 📋 Package Contents
+              - Compiled XRDP binaries (v0.9.21)
+              - PulseAudio modules for XRDP support
+              - Configuration files
+              - Installation utilities
+              
+              ### 🚀 Installation
+              ```bash
+              # Download and verify
+              wget https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/pulseaudio-xrdp-utils-${{ steps.datetime.outputs.timestamp }}.tar.gz
+              wget https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/install-xrdp-utils.sh
+              wget https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/checksums.sha256
+              
+              # Verify integrity
+              sha256sum -c checksums.sha256
+              
+              ```
+              
+              ---
+              *Built with GitHub Actions from Dockerfile*
+            tag_name: ${{ github.ref_name || format('build-{0}', steps.datetime.outputs.timestamp) }}
+            name: "PulseAudio XRDP Utils - ${{ steps.datetime.outputs.date }}"
+            draft: false
+            prerelease: false
+            token: ${{ secrets.REPO_TOKEN }}
+            make_latest: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') }}

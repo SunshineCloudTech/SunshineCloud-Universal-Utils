@@ -1,0 +1,12 @@
+[Desktop Entry]
+
+Type=Application
+Version=1.0
+Name=JetBrains GoLand
+Comment=JetBrains IDE for GO
+Path=/SunshineCloud/Jetbrains/GoLand/
+Exec=/SunshineCloud/Jetbrains/GoLand/bin/goland.sh
+Icon=GoLand
+Terminal=false
+Categories=Development
+StartupWMClass=jetbrains-goland

@@ -1,0 +1,12 @@
+[Desktop Entry]
+
+Type=Application
+Version=1.0
+Name=JetBrains DataGrip
+Comment=JetBrains IDE for Databases and SQL
+Path=/SunshineCloud/Jetbrains/DataGrip/
+Exec=/SunshineCloud/Jetbrains/DataGrip/bin/datagrip.sh
+Icon=DataGrip
+Terminal=false
+Categories=Development
+StartupWMClass=jetbrains-datagrip

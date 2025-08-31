@@ -1,0 +1,12 @@
+[Desktop Entry]
+
+Type=Application
+Version=1.0
+Name=JetBrains CLion
+Comment=JetBrains IDE for C/C++
+Path=/SunshineCloud/Jetbrains/CLion/
+Exec=/SunshineCloud/Jetbrains/CLion/bin/clion.sh
+Icon=CLion
+Terminal=false
+Categories=Development
+StartupWMClass=jetbrains-clion

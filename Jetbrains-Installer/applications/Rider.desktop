@@ -1,0 +1,12 @@
+[Desktop Entry]
+
+Type=Application
+Version=1.0
+Name=JetBrains Rider
+Comment=JetBrains IDE for .NET
+Path=/SunshineCloud/Jetbrains/Rider/
+Exec=/SunshineCloud/Jetbrains/Rider/bin/rider.sh
+Icon=Rider
+Terminal=false
+Categories=Development
+StartupWMClass=rider

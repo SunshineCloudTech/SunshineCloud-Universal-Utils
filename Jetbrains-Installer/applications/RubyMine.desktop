@@ -1,0 +1,12 @@
+[Desktop Entry]
+
+Type=Application
+Version=1.0
+Name=JetBrains RubyMine
+Comment=JetBrains IDE for Ruby
+Path=/SunshineCloud/Jetbrains/RubyMine/
+Exec=/SunshineCloud/Jetbrains/RubyMine/bin/rubymine.sh
+Icon=RubyMine
+Terminal=false
+Categories=Development
+StartupWMClass=rubymine

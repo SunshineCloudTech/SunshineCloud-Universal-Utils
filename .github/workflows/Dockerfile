@@ -4,7 +4,7 @@ FROM buildpack-deps:${VARIANT}-curl
 LABEL maintainer="SunshineCloud"
 LABEL description="Dockerfile for building xrdp with pulseaudio support"
 # Install packages
-# ADD sources/sources-bookworm.list /etc/apt/sources.list
+ADD sources/sources-bookworm.list /etc/apt/sources.list
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get -y update && apt-get -y install sudo
 RUN sudo apt-get -y update

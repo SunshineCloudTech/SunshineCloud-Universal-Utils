@@ -1,12 +1,12 @@
 ARG VARIANT="bookworm"
 FROM buildpack-deps:${VARIANT}-curl
-USER matrix0523
+# USER matrix0523
 LABEL maintainer="SunshineCloud"
 LABEL description="Dockerfile for building xrdp with pulseaudio support"
 # Install packages
 # ADD sources/sources-bookworm.list /etc/apt/sources.list
 ENV DEBIAN_FRONTEND=noninteractive
-# RUN sudo sed -i "s/# deb-src/deb-src/g" /etc/apt/sources.list
+RUN apt-get -y update && apt-get -y install sudo
 RUN sudo apt-get -y update
 RUN sudo apt-get -y upgrade
 ENV BUILD_DEPS="git autoconf pkg-config libssl-dev libpam0g-dev \

@@ -128,4 +128,4 @@ jobs:
             draft: false
             prerelease: false
             token: ${{ secrets.REPO_TOKEN }}
-            make_latest: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') }}
+            make_latest: false

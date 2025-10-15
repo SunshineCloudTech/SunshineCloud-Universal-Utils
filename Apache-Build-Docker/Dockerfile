@@ -223,7 +223,7 @@ WORKDIR ${SOURCES_DIR}/pcre-${PCRE_VERSION}
 
 RUN set -eux && \
     echo "=== 开始编译 PCRE ===" && \
-    source /tmp/build-config.env && \
+    . /tmp/build-config.env && \
     echo "=== 配置 PCRE 编译选项 ===" && \
     ./configure \
         --prefix=${PCRE_PREFIX} \
@@ -245,7 +245,7 @@ WORKDIR ${SOURCES_DIR}/apr-${APR_VERSION}
 
 RUN set -eux && \
     echo "=== 开始编译 APR ===" && \
-    source /tmp/build-config.env && \
+    . /tmp/build-config.env && \
     echo "=== 配置 APR 编译选项 ===" && \
     ./configure \
         --prefix=${APR_PREFIX} \
@@ -264,7 +264,7 @@ WORKDIR ${SOURCES_DIR}/apr-util-${APR_UTIL_VERSION}
 
 RUN set -eux && \
     echo "=== 开始编译 APR-Util ===" && \
-    source /tmp/build-config.env && \
+    . /tmp/build-config.env && \
     echo "=== 配置 APR-Util 编译选项 ===" && \
     ./configure \
         --prefix=${APR_UTIL_PREFIX} \
@@ -291,7 +291,7 @@ RUN set -eux && \
 # 配置和编译 Apache
 RUN set -eux && \
     echo "=== 开始编译 Apache HTTP Server ===" && \
-    source /tmp/build-config.env && \
+    . /tmp/build-config.env && \
     echo "=== 配置 Apache 编译选项 ===" && \
     ./configure \
         --prefix=${APACHE_PREFIX} \
@@ -703,9 +703,9 @@ RUN set -eux && \
 # ================================
 # 设置环境变量和路径
 # ================================
-ENV PATH=${APACHE_PREFIX}/bin:${APR_PREFIX}/bin:${APR_UTIL_PREFIX}/bin:${PCRE_PREFIX}/bin:$PATH
-ENV LD_LIBRARY_PATH=${APACHE_PREFIX}/lib:${APR_PREFIX}/lib:${APR_UTIL_PREFIX}/lib:${PCRE_PREFIX}/lib:$LD_LIBRARY_PATH
-ENV PKG_CONFIG_PATH=${APACHE_PREFIX}/lib/pkgconfig:${APR_PREFIX}/lib/pkgconfig:${APR_UTIL_PREFIX}/lib/pkgconfig:${PCRE_PREFIX}/lib/pkgconfig:$PKG_CONFIG_PATH
+ENV PATH=${APACHE_PREFIX}/bin:${APR_PREFIX}/bin:${APR_UTIL_PREFIX}/bin:${PCRE_PREFIX}/bin:${PATH:-/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin}
+ENV LD_LIBRARY_PATH=${APACHE_PREFIX}/lib:${APR_PREFIX}/lib:${APR_UTIL_PREFIX}/lib:${PCRE_PREFIX}/lib:${LD_LIBRARY_PATH:-}
+ENV PKG_CONFIG_PATH=${APACHE_PREFIX}/lib/pkgconfig:${APR_PREFIX}/lib/pkgconfig:${APR_UTIL_PREFIX}/lib/pkgconfig:${PCRE_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH:-}
 
 # ================================
 # 暴露端口

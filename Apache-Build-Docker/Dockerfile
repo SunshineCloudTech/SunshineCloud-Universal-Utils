@@ -214,6 +214,9 @@ RUN set -eux && \
 RUN set -eux && \
     echo "=== 设置编译配置 ===" && \
     echo "MAKE_PARALLEL_JOBS=${MAKE_PARALLEL_JOBS}" > /tmp/build-config.env && \
+    echo "export PATH=\"\${PATH:-/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin}\"" >> /tmp/build-config.env && \
+    echo "export PKG_CONFIG_PATH=\"\${PKG_CONFIG_PATH:-}\"" >> /tmp/build-config.env && \
+    echo "export LD_LIBRARY_PATH=\"\${LD_LIBRARY_PATH:-}\"" >> /tmp/build-config.env && \
     echo "将使用 ${MAKE_PARALLEL_JOBS} 个并行任务进行编译"
 
 # ================================
@@ -236,6 +239,12 @@ RUN set -eux && \
     make -j${MAKE_PARALLEL_JOBS} && \
     echo "=== 安装 PCRE ===" && \
     make install && \
+    echo "=== 更新环境变量和库路径 ===" && \
+    echo "export PATH=\"${PCRE_PREFIX}/bin:\${PATH:-}\"" >> /tmp/build-config.env && \
+    echo "export PKG_CONFIG_PATH=\"${PCRE_PREFIX}/lib/pkgconfig:\${PKG_CONFIG_PATH:-}\"" >> /tmp/build-config.env && \
+    echo "export LD_LIBRARY_PATH=\"${PCRE_PREFIX}/lib:\${LD_LIBRARY_PATH:-}\"" >> /tmp/build-config.env && \
+    echo "=== 验证 PCRE 安装 ===" && \
+    ${PCRE_PREFIX}/bin/pcre-config --version && \
     echo "=== PCRE 编译完成 ==="
 
 # ================================
@@ -255,6 +264,10 @@ RUN set -eux && \
     make -j${MAKE_PARALLEL_JOBS} && \
     echo "=== 安装 APR ===" && \
     make install && \
+    echo "=== 更新环境变量和库路径 ===" && \
+    echo "export PATH=\"${APR_PREFIX}/bin:\${PATH:-}\"" >> /tmp/build-config.env && \
+    echo "export PKG_CONFIG_PATH=\"${APR_PREFIX}/lib/pkgconfig:\${PKG_CONFIG_PATH:-}\"" >> /tmp/build-config.env && \
+    echo "export LD_LIBRARY_PATH=\"${APR_PREFIX}/lib:\${LD_LIBRARY_PATH:-}\"" >> /tmp/build-config.env && \
     echo "=== APR 编译完成 ==="
 
 # ================================
@@ -275,6 +288,10 @@ RUN set -eux && \
     make -j${MAKE_PARALLEL_JOBS} && \
     echo "=== 安装 APR-Util ===" && \
     make install && \
+    echo "=== 更新环境变量和库路径 ===" && \
+    echo "export PATH=\"${APR_UTIL_PREFIX}/bin:\${PATH:-}\"" >> /tmp/build-config.env && \
+    echo "export PKG_CONFIG_PATH=\"${APR_UTIL_PREFIX}/lib/pkgconfig:\${PKG_CONFIG_PATH:-}\"" >> /tmp/build-config.env && \
+    echo "export LD_LIBRARY_PATH=\"${APR_UTIL_PREFIX}/lib:\${LD_LIBRARY_PATH:-}\"" >> /tmp/build-config.env && \
     echo "=== APR-Util 编译完成 ==="
 
 # ================================
@@ -292,6 +309,13 @@ RUN set -eux && \
 RUN set -eux && \
     echo "=== 开始编译 Apache HTTP Server ===" && \
     . /tmp/build-config.env && \
+    echo "=== 验证编译环境 ===" && \
+    echo "PATH: $PATH" && \
+    echo "PKG_CONFIG_PATH: $PKG_CONFIG_PATH" && \
+    echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH" && \
+    echo "=== 检查 pcre-config ===" && \
+    which pcre-config && \
+    pcre-config --version && \
     echo "=== 配置 Apache 编译选项 ===" && \
     ./configure \
         --prefix=${APACHE_PREFIX} \

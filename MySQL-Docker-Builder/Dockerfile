@@ -631,99 +631,14 @@ RUN echo "============================================" && \
     echo "============================================"
 
 # ============================================================================
-# 阶段 10: 生成 Supervisor 配置文件
-# ============================================================================
-
-# 创建 Supervisor 配置文件用于管理 MySQL 进程
-RUN echo "============================================" && \
-    echo "生成 Supervisor 配置文件..." && \
-    echo "============================================" && \
-    mkdir -p ${SUPERVISOR_CONFDIR} ${SUPERVISOR_LOGDIR} && \
-    echo '# ============================================================================' > ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# Supervisor MySQL 进程管理配置文件' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# ============================================================================' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# 生成时间: 2025-10-15' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# 程序名称: mysql-server' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# 说明: 此配置用于通过 Supervisor 管理 MySQL 服务器进程' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# ============================================================================' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '[program:mysql-server]' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# --- 基本配置 ---' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# 执行命令: 以 mysql 用户身份运行 mysqld' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo 'command=/SunshineCloud/MySQL-Server/bin/mysqld --defaults-file=/etc/mysql/my.cnf --user=mysql --console' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# 工作目录' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo 'directory=/SunshineCloud/MySQL-Server' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# 运行用户' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo 'user=mysql' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# --- 自动启动配置 ---' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# 是否随 Supervisor 自动启动' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo 'autostart=true' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# 是否自动重启' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo 'autorestart=true' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# 启动重试次数' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo 'startretries=3' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# 启动等待时间 (秒)' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo 'startsecs=10' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# --- 停止配置 ---' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# 停止信号' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo 'stopsignal=TERM' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# 停止等待时间 (秒)' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo 'stopwaitsecs=30' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# 停止进程组' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo 'stopasgroup=true' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo 'killasgroup=true' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# --- 日志配置 ---' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# 标准输出日志文件' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo 'stdout_logfile=/var/log/supervisor/mysql-stdout.log' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# 标准输出日志文件最大大小' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo 'stdout_logfile_maxbytes=50MB' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# 标准输出日志文件备份数量' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo 'stdout_logfile_backups=10' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# 标准错误日志文件' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo 'stderr_logfile=/var/log/supervisor/mysql-stderr.log' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# 标准错误日志文件最大大小' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo 'stderr_logfile_maxbytes=50MB' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# 标准错误日志文件备份数量' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo 'stderr_logfile_backups=10' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# --- 进程优先级 ---' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# 启动优先级' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo 'priority=10' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# --- 环境变量 ---' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# 设置环境变量' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo 'environment=MYSQL_HOME="/SunshineCloud/MySQL-Server",PATH="/SunshineCloud/MySQL-Server/bin:%(ENV_PATH)s"' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# --- 其他配置 ---' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo '# 退出代码' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo 'exitcodes=0,2' >> ${SUPERVISOR_CONFDIR}/mysql.conf && \
-    echo "Supervisor 配置文件生成完成: ${SUPERVISOR_CONFDIR}/mysql.conf" && \
-    echo "============================================"
-
-# ============================================================================
-# 阶段 11: 设置 PATH 环境变量
+# 阶段 10: 设置 PATH 环境变量
 # ============================================================================
 
 # 将 MySQL 二进制文件目录添加到系统 PATH
 ENV PATH=${MYSQL_PREFIX}/bin:$PATH
 
 # ============================================================================
-# 阶段 12: 初始化 MySQL 数据库
+# 阶段 11: 初始化 MySQL 数据库
 # ============================================================================
 
 # 初始化 MySQL 数据目录和系统数据库

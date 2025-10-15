@@ -1,0 +1,174 @@
+version: '3.8'
+
+# ================================
+# Apache HTTP Server Docker Compose 配置
+# ================================
+# 用于快速部署和管理 Apache HTTP Server 容器
+# 支持开发和生产环境
+# ================================
+
+services:
+  # ================================
+  # Apache HTTP Server 服务
+  # ================================
+  apache:
+    # 镜像配置
+    image: apache-from-source:2.4.58
+    container_name: apache-server
+    hostname: apache-server
+    
+    # 构建配置（如果需要本地构建）
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - APACHE_VERSION=2.4.58
+        - APR_VERSION=1.7.4
+        - APR_UTIL_VERSION=1.6.3
+        - COMPILE_CPU_CORES=0
+        - MAX_PARALLEL_JOBS=8
+    
+    # 重启策略
+    restart: unless-stopped
+    
+    # 端口映射
+    ports:
+      - "80:80"           # HTTP 端口
+      - "443:443"         # HTTPS 端口
+      - "9001:9001"       # Supervisor Web 管理界面
+    
+    # 环境变量配置
+    environment:
+      # Apache 基本配置
+      - APACHE_SERVER_NAME=localhost
+      - APACHE_SERVER_ADMIN=admin@localhost
+      - APACHE_LISTEN_PORT=80
+      - APACHE_SSL_PORT=443
+      
+      # 运行用户配置
+      - APACHE_USER=www-data
+      - APACHE_GROUP=www-data
+      
+      # 编译优化配置（构建时使用）
+      - COMPILE_CPU_CORES=0
+      - COMPILE_MEMORY_PER_JOB=1536
+      - MAX_PARALLEL_JOBS=8
+      
+      # 语言和编码
+      - LANG=C.UTF-8
+      - LC_ALL=C.UTF-8
+    
+    # 数据卷挂载
+    volumes:
+      # 网站内容目录
+      - ./htdocs:/usr/local/apache2/htdocs:rw
+      
+      # Apache 配置目录
+      - ./conf:/usr/local/apache2/conf:rw
+      
+      # 日志目录
+      - ./logs:/var/log/apache2:rw
+      
+      # SSL 证书目录（如果使用 HTTPS）
+      - ./ssl:/etc/ssl/apache:ro
+      
+      # Supervisor 配置目录（如果需要自定义）
+      - ./supervisor:/etc/supervisor/conf.d:ro
+    
+    # 资源限制
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    
+    # 健康检查
+    healthcheck:
+      test: ["/usr/local/bin/health-check.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    
+    # 网络配置
+    networks:
+      - apache-network
+    
+    # 安全配置
+    security_opt:
+      - no-new-privileges:true
+    
+    # 日志配置
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "5"
+
+  # ================================
+  # 可选：日志收集服务（如 ELK）
+  # ================================
+  # logstash:
+  #   image: docker.elastic.co/logstash/logstash:8.8.0
+  #   container_name: apache-logstash
+  #   volumes:
+  #     - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+  #     - ./logs:/var/log/apache2:ro
+  #   networks:
+  #     - apache-network
+  #   depends_on:
+  #     - apache
+
+  # ================================
+  # 可选：监控服务（如 Prometheus）
+  # ================================
+  # prometheus:
+  #   image: prom/prometheus:latest
+  #   container_name: apache-prometheus
+  #   ports:
+  #     - "9090:9090"
+  #   volumes:
+  #     - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+  #   networks:
+  #     - apache-network
+
+# ================================
+# 网络配置
+# ================================
+networks:
+  apache-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+# ================================
+# 数据卷配置
+# ================================
+volumes:
+  # 持久化 Apache 日志
+  apache-logs:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./logs
+  
+  # 持久化网站内容
+  apache-htdocs:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./htdocs
+  
+  # 持久化配置文件
+  apache-conf:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./conf

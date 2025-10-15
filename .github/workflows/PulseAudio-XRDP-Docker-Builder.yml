@@ -57,7 +57,7 @@ jobs:
         - name: Build XRDP with PulseAudio support
           run: |
             # Build the Docker image with the XRDP and PulseAudio modules
-            docker build -f PulseAudio-XRDP/Dockerfile -t xrdp-builder .
+            docker build -f PulseAudio-XRDP-Docker-Builder/Dockerfile -t xrdp-builder .
             
             # Create a container to extract the built files
             docker create --name xrdp-temp xrdp-builder

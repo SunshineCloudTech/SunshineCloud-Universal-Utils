@@ -396,6 +396,13 @@ RUN echo "============================================" && \
 RUN echo "============================================" && \
     echo "开始编译 MySQL ${MYSQL_VERSION}..." && \
     echo "============================================" && \
+    # 确保在正确的源码目录中
+    cd ${BUILD_TMPDIR}/mysql-${MYSQL_VERSION} && \
+    # 检查 Makefile 是否存在
+    if [ ! -f Makefile ]; then \
+        echo "错误: 未找到 Makefile，CMake 配置可能失败"; \
+        exit 1; \
+    fi && \
     # 获取系统资源信息
     CPU_CORES=$(nproc) && \
     TOTAL_MEM_MB=$(free -m | awk '/^Mem:/ {print $2}') && \
@@ -407,6 +414,7 @@ RUN echo "============================================" && \
     [ ${PARALLEL_JOBS} -lt 1 ] && PARALLEL_JOBS=1 && \
     [ ${PARALLEL_JOBS} -gt ${CPU_CORES} ] && PARALLEL_JOBS=${CPU_CORES} && \
     echo "编译配置:" && \
+    echo "  - 当前目录: $(pwd)" && \
     echo "  - CPU 核心数: ${CPU_CORES}" && \
     echo "  - 总内存: ${TOTAL_MEM_MB} MB" && \
     echo "  - 内存限制的最大并行数: ${MAX_JOBS_BY_MEM}" && \

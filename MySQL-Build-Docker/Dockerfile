@@ -232,7 +232,6 @@ RUN echo "============================================" && \
     libaio-dev \
     libmecab-dev \
     libtirpc-dev \
-    librpc-dev \
     # --- 系统构建工具 ---
     pkg-config \
     bison \

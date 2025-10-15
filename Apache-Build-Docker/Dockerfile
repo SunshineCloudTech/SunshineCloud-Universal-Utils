@@ -10,7 +10,7 @@
 # 5. 生产级配置和优化
 # ================================
 ARG VARIANT="bookworm"
-FROM buildpack-deps:${VARIANT}-curl# 
+FROM buildpack-deps:${VARIANT}-curl
 # ================================
 # 镜像元信息
 # ================================

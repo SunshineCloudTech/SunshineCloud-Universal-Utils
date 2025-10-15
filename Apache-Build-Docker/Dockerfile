@@ -149,11 +149,11 @@ RUN set -eux && \
 # ================================
 # 安装 Supervisor
 # ================================
-RUN set -eux && \
-    echo "=== 安装 Supervisor ===" && \
-    pip3 install --no-cache-dir supervisor && \
-    echo "=== 创建 Supervisor 目录 ===" && \
-    mkdir -p ${SUPERVISOR_CONF_DIR} ${SUPERVISOR_LOG_DIR}
+# RUN set -eux && \
+#     echo "=== 安装 Supervisor ===" && \
+#     pip3 install --no-cache-dir supervisor && \
+#     echo "=== 创建 Supervisor 目录 ===" && \
+#     mkdir -p ${SUPERVISOR_CONF_DIR} ${SUPERVISOR_LOG_DIR}
 
 # ================================
 # 创建系统用户和目录
@@ -437,253 +437,253 @@ RUN set -eux && \
 # ================================
 # 生成 Supervisor 主配置文件
 # ================================
-RUN set -eux && \
-    echo "=== 生成 Supervisor 主配置文件 ===" && \
-    echo '; Supervisor 主配置文件' > /etc/supervisord.conf && \
-    echo '; 用于管理 Apache HTTP Server 进程' >> /etc/supervisord.conf && \
-    echo '; ================================' >> /etc/supervisord.conf && \
-    echo '' >> /etc/supervisord.conf && \
-    echo '[supervisord]' >> /etc/supervisord.conf && \
-    echo '; Supervisor 守护进程配置' >> /etc/supervisord.conf && \
-    echo 'nodaemon=true' >> /etc/supervisord.conf && \
-    echo 'user=root' >> /etc/supervisord.conf && \
-    echo 'logfile=/var/log/supervisor/supervisord.log' >> /etc/supervisord.conf && \
-    echo 'logfile_maxbytes=50MB' >> /etc/supervisord.conf && \
-    echo 'logfile_backups=10' >> /etc/supervisord.conf && \
-    echo 'loglevel=info' >> /etc/supervisord.conf && \
-    echo 'pidfile=/var/run/supervisord.pid' >> /etc/supervisord.conf && \
-    echo 'childlogdir=/var/log/supervisor' >> /etc/supervisord.conf && \
-    echo 'silent=false' >> /etc/supervisord.conf && \
-    echo '' >> /etc/supervisord.conf && \
-    echo '; Unix socket 配置' >> /etc/supervisord.conf && \
-    echo '[unix_http_server]' >> /etc/supervisord.conf && \
-    echo 'file=/var/run/supervisor.sock' >> /etc/supervisord.conf && \
-    echo 'chmod=0700' >> /etc/supervisord.conf && \
-    echo '' >> /etc/supervisord.conf && \
-    echo '; Web 管理界面配置（可选）' >> /etc/supervisord.conf && \
-    echo '[inet_http_server]' >> /etc/supervisord.conf && \
-    echo 'port=127.0.0.1:9001' >> /etc/supervisord.conf && \
-    echo 'username=admin' >> /etc/supervisord.conf && \
-    echo 'password=admin123' >> /etc/supervisord.conf && \
-    echo '' >> /etc/supervisord.conf && \
-    echo '; RPC 接口配置' >> /etc/supervisord.conf && \
-    echo '[rpcinterface:supervisor]' >> /etc/supervisord.conf && \
-    echo 'supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface' >> /etc/supervisord.conf && \
-    echo '' >> /etc/supervisord.conf && \
-    echo '; supervisorctl 配置' >> /etc/supervisord.conf && \
-    echo '[supervisorctl]' >> /etc/supervisord.conf && \
-    echo 'serverurl=unix:///var/run/supervisor.sock' >> /etc/supervisord.conf && \
-    echo '' >> /etc/supervisord.conf && \
-    echo '; 包含子配置文件' >> /etc/supervisord.conf && \
-    echo '[include]' >> /etc/supervisord.conf && \
-    echo 'files = /etc/supervisor/conf.d/*.conf' >> /etc/supervisord.conf
+# RUN set -eux && \
+#     echo "=== 生成 Supervisor 主配置文件 ===" && \
+#     echo '; Supervisor 主配置文件' > /etc/supervisord.conf && \
+#     echo '; 用于管理 Apache HTTP Server 进程' >> /etc/supervisord.conf && \
+#     echo '; ================================' >> /etc/supervisord.conf && \
+#     echo '' >> /etc/supervisord.conf && \
+#     echo '[supervisord]' >> /etc/supervisord.conf && \
+#     echo '; Supervisor 守护进程配置' >> /etc/supervisord.conf && \
+#     echo 'nodaemon=true' >> /etc/supervisord.conf && \
+#     echo 'user=root' >> /etc/supervisord.conf && \
+#     echo 'logfile=/var/log/supervisor/supervisord.log' >> /etc/supervisord.conf && \
+#     echo 'logfile_maxbytes=50MB' >> /etc/supervisord.conf && \
+#     echo 'logfile_backups=10' >> /etc/supervisord.conf && \
+#     echo 'loglevel=info' >> /etc/supervisord.conf && \
+#     echo 'pidfile=/var/run/supervisord.pid' >> /etc/supervisord.conf && \
+#     echo 'childlogdir=/var/log/supervisor' >> /etc/supervisord.conf && \
+#     echo 'silent=false' >> /etc/supervisord.conf && \
+#     echo '' >> /etc/supervisord.conf && \
+#     echo '; Unix socket 配置' >> /etc/supervisord.conf && \
+#     echo '[unix_http_server]' >> /etc/supervisord.conf && \
+#     echo 'file=/var/run/supervisor.sock' >> /etc/supervisord.conf && \
+#     echo 'chmod=0700' >> /etc/supervisord.conf && \
+#     echo '' >> /etc/supervisord.conf && \
+#     echo '; Web 管理界面配置（可选）' >> /etc/supervisord.conf && \
+#     echo '[inet_http_server]' >> /etc/supervisord.conf && \
+#     echo 'port=127.0.0.1:9001' >> /etc/supervisord.conf && \
+#     echo 'username=admin' >> /etc/supervisord.conf && \
+#     echo 'password=admin123' >> /etc/supervisord.conf && \
+#     echo '' >> /etc/supervisord.conf && \
+#     echo '; RPC 接口配置' >> /etc/supervisord.conf && \
+#     echo '[rpcinterface:supervisor]' >> /etc/supervisord.conf && \
+#     echo 'supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface' >> /etc/supervisord.conf && \
+#     echo '' >> /etc/supervisord.conf && \
+#     echo '; supervisorctl 配置' >> /etc/supervisord.conf && \
+#     echo '[supervisorctl]' >> /etc/supervisord.conf && \
+#     echo 'serverurl=unix:///var/run/supervisor.sock' >> /etc/supervisord.conf && \
+#     echo '' >> /etc/supervisord.conf && \
+#     echo '; 包含子配置文件' >> /etc/supervisord.conf && \
+#     echo '[include]' >> /etc/supervisord.conf && \
+#     echo 'files = /etc/supervisor/conf.d/*.conf' >> /etc/supervisord.conf
 
-# ================================
-# 生成 Apache Supervisor 配置文件
-# ================================
-RUN set -eux && \
-    echo "=== 生成 Apache Supervisor 配置文件 ===" && \
-    echo '; ================================' > ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; Apache HTTP Server Supervisor 配置文件' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 此配置文件用于通过 Supervisor 管理 Apache HTTP Server 进程' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 确保 Apache 在容器中稳定运行，并提供自动重启功能' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '[program:apache]' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 程序基本配置' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 执行命令 - 使用前台模式运行 Apache' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'command=/usr/local/apache2/bin/httpd -D FOREGROUND' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 程序名称，用于 supervisorctl 管理' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'process_name=%(program_name)s' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 程序数量，Apache 只需要一个主进程' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'numprocs=1' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 进程管理配置' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; Supervisor 启动时自动启动 Apache' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'autostart=true' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 进程异常退出时自动重启' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'autorestart=true' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 程序启动后等待时间，超过此时间未退出视为启动成功' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'startsecs=10' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 启动失败时的重试次数' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'startretries=3' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 程序正常退出的返回码，只有这些返回码被认为是正常退出' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'exitcodes=0,2' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 发送 SIGTERM 信号后等待进程退出的最大时间' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'stopwaitsecs=10' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 如果进程在 stopwaitsecs 时间内没有退出，发送 SIGKILL 信号' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'stopsignal=TERM' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 停止进程时是否杀死整个进程组（包括子进程）' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'stopasgroup=true' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 发送 SIGKILL 时是否杀死整个进程组' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'killasgroup=true' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 用户和目录配置' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 运行用户 - Apache 需要以 root 启动以绑定特权端口，之后会降权' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'user=root' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 工作目录' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'directory=/usr/local/apache2' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 标准输出日志配置' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 标准输出日志文件路径' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'stdout_logfile=/var/log/supervisor/apache-stdout.log' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 标准输出日志文件最大大小' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'stdout_logfile_maxbytes=50MB' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 标准输出日志文件备份数量' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'stdout_logfile_backups=10' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 是否启用标准输出日志捕获' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'stdout_capture_maxbytes=0' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 标准输出日志事件大小' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'stdout_events_enabled=false' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 标准错误日志配置' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 标准错误日志文件路径' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'stderr_logfile=/var/log/supervisor/apache-stderr.log' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 标准错误日志文件最大大小' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'stderr_logfile_maxbytes=50MB' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 标准错误日志文件备份数量' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'stderr_logfile_backups=10' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 是否启用标准错误日志捕获' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'stderr_capture_maxbytes=0' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 标准错误日志事件大小' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'stderr_events_enabled=false' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 优先级和环境变量配置' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 启动优先级，数字越小优先级越高' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'priority=999' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 环境变量设置' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'environment=APACHE_RUN_DIR="/var/run/apache2",APACHE_LOG_DIR="/var/log/apache2",APACHE_LOCK_DIR="/var/lock/apache2",APACHE_PID_FILE="/var/run/apache2/httpd.pid",LANG="C.UTF-8"' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 服务器配置标识' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo '; 服务器配置标识，用于区分不同的 Apache 实例' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
-    echo 'serverurl=AUTO' >> ${SUPERVISOR_CONF_DIR}/apache.conf
+# # ================================
+# # 生成 Apache Supervisor 配置文件
+# # ================================
+# RUN set -eux && \
+#     echo "=== 生成 Apache Supervisor 配置文件 ===" && \
+#     echo '; ================================' > ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; Apache HTTP Server Supervisor 配置文件' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 此配置文件用于通过 Supervisor 管理 Apache HTTP Server 进程' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 确保 Apache 在容器中稳定运行，并提供自动重启功能' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '[program:apache]' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 程序基本配置' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 执行命令 - 使用前台模式运行 Apache' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'command=/usr/local/apache2/bin/httpd -D FOREGROUND' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 程序名称，用于 supervisorctl 管理' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'process_name=%(program_name)s' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 程序数量，Apache 只需要一个主进程' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'numprocs=1' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 进程管理配置' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; Supervisor 启动时自动启动 Apache' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'autostart=true' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 进程异常退出时自动重启' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'autorestart=true' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 程序启动后等待时间，超过此时间未退出视为启动成功' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'startsecs=10' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 启动失败时的重试次数' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'startretries=3' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 程序正常退出的返回码，只有这些返回码被认为是正常退出' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'exitcodes=0,2' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 发送 SIGTERM 信号后等待进程退出的最大时间' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'stopwaitsecs=10' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 如果进程在 stopwaitsecs 时间内没有退出，发送 SIGKILL 信号' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'stopsignal=TERM' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 停止进程时是否杀死整个进程组（包括子进程）' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'stopasgroup=true' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 发送 SIGKILL 时是否杀死整个进程组' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'killasgroup=true' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 用户和目录配置' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 运行用户 - Apache 需要以 root 启动以绑定特权端口，之后会降权' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'user=root' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 工作目录' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'directory=/usr/local/apache2' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 标准输出日志配置' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 标准输出日志文件路径' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'stdout_logfile=/var/log/supervisor/apache-stdout.log' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 标准输出日志文件最大大小' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'stdout_logfile_maxbytes=50MB' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 标准输出日志文件备份数量' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'stdout_logfile_backups=10' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 是否启用标准输出日志捕获' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'stdout_capture_maxbytes=0' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 标准输出日志事件大小' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'stdout_events_enabled=false' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 标准错误日志配置' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 标准错误日志文件路径' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'stderr_logfile=/var/log/supervisor/apache-stderr.log' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 标准错误日志文件最大大小' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'stderr_logfile_maxbytes=50MB' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 标准错误日志文件备份数量' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'stderr_logfile_backups=10' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 是否启用标准错误日志捕获' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'stderr_capture_maxbytes=0' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 标准错误日志事件大小' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'stderr_events_enabled=false' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 优先级和环境变量配置' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 启动优先级，数字越小优先级越高' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'priority=999' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 环境变量设置' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'environment=APACHE_RUN_DIR="/var/run/apache2",APACHE_LOG_DIR="/var/log/apache2",APACHE_LOCK_DIR="/var/lock/apache2",APACHE_PID_FILE="/var/run/apache2/httpd.pid",LANG="C.UTF-8"' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 服务器配置标识' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; ================================' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo '; 服务器配置标识，用于区分不同的 Apache 实例' >> ${SUPERVISOR_CONF_DIR}/apache.conf && \
+#     echo 'serverurl=AUTO' >> ${SUPERVISOR_CONF_DIR}/apache.conf
 
-# ================================
-# 创建 Apache 启动脚本
-# ================================
-RUN set -eux && \
-    echo "=== 创建 Apache 启动脚本 ===" && \
-    echo '#!/bin/bash' > /usr/local/bin/apache-start.sh && \
-    echo '# Apache HTTP Server 启动脚本' >> /usr/local/bin/apache-start.sh && \
-    echo '# 用于在容器启动时进行必要的初始化' >> /usr/local/bin/apache-start.sh && \
-    echo '' >> /usr/local/bin/apache-start.sh && \
-    echo 'set -e' >> /usr/local/bin/apache-start.sh && \
-    echo '' >> /usr/local/bin/apache-start.sh && \
-    echo 'echo "=== Apache HTTP Server 启动初始化 ==="' >> /usr/local/bin/apache-start.sh && \
-    echo '' >> /usr/local/bin/apache-start.sh && \
-    echo '# 创建运行时目录' >> /usr/local/bin/apache-start.sh && \
-    echo 'echo "创建运行时目录..."' >> /usr/local/bin/apache-start.sh && \
-    echo 'mkdir -p /var/run/apache2 /var/log/apache2 /var/lock/apache2 /var/cache/apache2' >> /usr/local/bin/apache-start.sh && \
-    echo '' >> /usr/local/bin/apache-start.sh && \
-    echo '# 设置权限' >> /usr/local/bin/apache-start.sh && \
-    echo 'echo "设置目录权限..."' >> /usr/local/bin/apache-start.sh && \
-    echo 'chown -R www-data:www-data /var/run/apache2 /var/log/apache2 /var/lock/apache2 /var/cache/apache2' >> /usr/local/bin/apache-start.sh && \
-    echo '' >> /usr/local/bin/apache-start.sh && \
-    echo '# 检查配置文件语法' >> /usr/local/bin/apache-start.sh && \
-    echo 'echo "检查 Apache 配置文件语法..."' >> /usr/local/bin/apache-start.sh && \
-    echo 'if /usr/local/apache2/bin/httpd -t; then' >> /usr/local/bin/apache-start.sh && \
-    echo '    echo "Apache 配置文件语法正确"' >> /usr/local/bin/apache-start.sh && \
-    echo 'else' >> /usr/local/bin/apache-start.sh && \
-    echo '    echo "错误: Apache 配置文件语法错误"' >> /usr/local/bin/apache-start.sh && \
-    echo '    exit 1' >> /usr/local/bin/apache-start.sh && \
-    echo 'fi' >> /usr/local/bin/apache-start.sh && \
-    echo '' >> /usr/local/bin/apache-start.sh && \
-    echo '# 显示 Apache 版本信息' >> /usr/local/bin/apache-start.sh && \
-    echo 'echo "Apache 版本信息:"' >> /usr/local/bin/apache-start.sh && \
-    echo '/usr/local/apache2/bin/httpd -v' >> /usr/local/bin/apache-start.sh && \
-    echo '' >> /usr/local/bin/apache-start.sh && \
-    echo '# 显示编译模块信息' >> /usr/local/bin/apache-start.sh && \
-    echo 'echo "已编译的模块:"' >> /usr/local/bin/apache-start.sh && \
-    echo '/usr/local/apache2/bin/httpd -l' >> /usr/local/bin/apache-start.sh && \
-    echo '' >> /usr/local/bin/apache-start.sh && \
-    echo 'echo "=== Apache HTTP Server 初始化完成 ==="' >> /usr/local/bin/apache-start.sh && \
-    echo '' >> /usr/local/bin/apache-start.sh && \
-    echo '# 启动 Supervisor' >> /usr/local/bin/apache-start.sh && \
-    echo 'echo "启动 Supervisor..."' >> /usr/local/bin/apache-start.sh && \
-    echo 'exec /usr/local/bin/supervisord -c /etc/supervisord.conf' >> /usr/local/bin/apache-start.sh
+# # ================================
+# # 创建 Apache 启动脚本
+# # ================================
+# RUN set -eux && \
+#     echo "=== 创建 Apache 启动脚本 ===" && \
+#     echo '#!/bin/bash' > /usr/local/bin/apache-start.sh && \
+#     echo '# Apache HTTP Server 启动脚本' >> /usr/local/bin/apache-start.sh && \
+#     echo '# 用于在容器启动时进行必要的初始化' >> /usr/local/bin/apache-start.sh && \
+#     echo '' >> /usr/local/bin/apache-start.sh && \
+#     echo 'set -e' >> /usr/local/bin/apache-start.sh && \
+#     echo '' >> /usr/local/bin/apache-start.sh && \
+#     echo 'echo "=== Apache HTTP Server 启动初始化 ==="' >> /usr/local/bin/apache-start.sh && \
+#     echo '' >> /usr/local/bin/apache-start.sh && \
+#     echo '# 创建运行时目录' >> /usr/local/bin/apache-start.sh && \
+#     echo 'echo "创建运行时目录..."' >> /usr/local/bin/apache-start.sh && \
+#     echo 'mkdir -p /var/run/apache2 /var/log/apache2 /var/lock/apache2 /var/cache/apache2' >> /usr/local/bin/apache-start.sh && \
+#     echo '' >> /usr/local/bin/apache-start.sh && \
+#     echo '# 设置权限' >> /usr/local/bin/apache-start.sh && \
+#     echo 'echo "设置目录权限..."' >> /usr/local/bin/apache-start.sh && \
+#     echo 'chown -R www-data:www-data /var/run/apache2 /var/log/apache2 /var/lock/apache2 /var/cache/apache2' >> /usr/local/bin/apache-start.sh && \
+#     echo '' >> /usr/local/bin/apache-start.sh && \
+#     echo '# 检查配置文件语法' >> /usr/local/bin/apache-start.sh && \
+#     echo 'echo "检查 Apache 配置文件语法..."' >> /usr/local/bin/apache-start.sh && \
+#     echo 'if /usr/local/apache2/bin/httpd -t; then' >> /usr/local/bin/apache-start.sh && \
+#     echo '    echo "Apache 配置文件语法正确"' >> /usr/local/bin/apache-start.sh && \
+#     echo 'else' >> /usr/local/bin/apache-start.sh && \
+#     echo '    echo "错误: Apache 配置文件语法错误"' >> /usr/local/bin/apache-start.sh && \
+#     echo '    exit 1' >> /usr/local/bin/apache-start.sh && \
+#     echo 'fi' >> /usr/local/bin/apache-start.sh && \
+#     echo '' >> /usr/local/bin/apache-start.sh && \
+#     echo '# 显示 Apache 版本信息' >> /usr/local/bin/apache-start.sh && \
+#     echo 'echo "Apache 版本信息:"' >> /usr/local/bin/apache-start.sh && \
+#     echo '/usr/local/apache2/bin/httpd -v' >> /usr/local/bin/apache-start.sh && \
+#     echo '' >> /usr/local/bin/apache-start.sh && \
+#     echo '# 显示编译模块信息' >> /usr/local/bin/apache-start.sh && \
+#     echo 'echo "已编译的模块:"' >> /usr/local/bin/apache-start.sh && \
+#     echo '/usr/local/apache2/bin/httpd -l' >> /usr/local/bin/apache-start.sh && \
+#     echo '' >> /usr/local/bin/apache-start.sh && \
+#     echo 'echo "=== Apache HTTP Server 初始化完成 ==="' >> /usr/local/bin/apache-start.sh && \
+#     echo '' >> /usr/local/bin/apache-start.sh && \
+#     echo '# 启动 Supervisor' >> /usr/local/bin/apache-start.sh && \
+#     echo 'echo "启动 Supervisor..."' >> /usr/local/bin/apache-start.sh && \
+#     echo 'exec /usr/local/bin/supervisord -c /etc/supervisord.conf' >> /usr/local/bin/apache-start.sh
 
-RUN chmod +x /usr/local/bin/apache-start.sh
+# RUN chmod +x /usr/local/bin/apache-start.sh
 
 # ================================
 # 创建健康检查脚本
 # ================================
-RUN set -eux && \
-    echo "=== 创建健康检查脚本 ===" && \
-    echo '#!/bin/bash' > /usr/local/bin/health-check.sh && \
-    echo '# Apache HTTP Server 健康检查脚本' >> /usr/local/bin/health-check.sh && \
-    echo '' >> /usr/local/bin/health-check.sh && \
-    echo '# 检查 Apache 进程是否运行' >> /usr/local/bin/health-check.sh && \
-    echo 'if ! pgrep -f "httpd" > /dev/null; then' >> /usr/local/bin/health-check.sh && \
-    echo '    echo "错误: Apache 进程未运行"' >> /usr/local/bin/health-check.sh && \
-    echo '    exit 1' >> /usr/local/bin/health-check.sh && \
-    echo 'fi' >> /usr/local/bin/health-check.sh && \
-    echo '' >> /usr/local/bin/health-check.sh && \
-    echo '# 检查 Apache 是否响应 HTTP 请求' >> /usr/local/bin/health-check.sh && \
-    echo 'if ! curl -f -s http://localhost/ > /dev/null; then' >> /usr/local/bin/health-check.sh && \
-    echo '    echo "错误: Apache HTTP 服务无响应"' >> /usr/local/bin/health-check.sh && \
-    echo '    exit 1' >> /usr/local/bin/health-check.sh && \
-    echo 'fi' >> /usr/local/bin/health-check.sh && \
-    echo '' >> /usr/local/bin/health-check.sh && \
-    echo 'echo "Apache HTTP Server 健康检查通过"' >> /usr/local/bin/health-check.sh && \
-    echo 'exit 0' >> /usr/local/bin/health-check.sh
+# RUN set -eux && \
+#     echo "=== 创建健康检查脚本 ===" && \
+#     echo '#!/bin/bash' > /usr/local/bin/health-check.sh && \
+#     echo '# Apache HTTP Server 健康检查脚本' >> /usr/local/bin/health-check.sh && \
+#     echo '' >> /usr/local/bin/health-check.sh && \
+#     echo '# 检查 Apache 进程是否运行' >> /usr/local/bin/health-check.sh && \
+#     echo 'if ! pgrep -f "httpd" > /dev/null; then' >> /usr/local/bin/health-check.sh && \
+#     echo '    echo "错误: Apache 进程未运行"' >> /usr/local/bin/health-check.sh && \
+#     echo '    exit 1' >> /usr/local/bin/health-check.sh && \
+#     echo 'fi' >> /usr/local/bin/health-check.sh && \
+#     echo '' >> /usr/local/bin/health-check.sh && \
+#     echo '# 检查 Apache 是否响应 HTTP 请求' >> /usr/local/bin/health-check.sh && \
+#     echo 'if ! curl -f -s http://localhost/ > /dev/null; then' >> /usr/local/bin/health-check.sh && \
+#     echo '    echo "错误: Apache HTTP 服务无响应"' >> /usr/local/bin/health-check.sh && \
+#     echo '    exit 1' >> /usr/local/bin/health-check.sh && \
+#     echo 'fi' >> /usr/local/bin/health-check.sh && \
+#     echo '' >> /usr/local/bin/health-check.sh && \
+#     echo 'echo "Apache HTTP Server 健康检查通过"' >> /usr/local/bin/health-check.sh && \
+#     echo 'exit 0' >> /usr/local/bin/health-check.sh
 
-RUN chmod +x /usr/local/bin/health-check.sh
+# RUN chmod +x /usr/local/bin/health-check.sh
 
-# ================================
-# 创建管理脚本
-# ================================
-RUN set -eux && \
-    echo "=== 创建管理脚本 ===" && \
-    echo '#!/bin/bash' > /usr/local/bin/apache-ctl.sh && \
-    echo '# Apache 管理脚本' >> /usr/local/bin/apache-ctl.sh && \
-    echo '' >> /usr/local/bin/apache-ctl.sh && \
-    echo 'case "$1" in' >> /usr/local/bin/apache-ctl.sh && \
-    echo '    start)' >> /usr/local/bin/apache-ctl.sh && \
-    echo '        echo "启动 Apache..."' >> /usr/local/bin/apache-ctl.sh && \
-    echo '        /usr/local/bin/supervisorctl start apache' >> /usr/local/bin/apache-ctl.sh && \
-    echo '        ;;' >> /usr/local/bin/apache-ctl.sh && \
-    echo '    stop)' >> /usr/local/bin/apache-ctl.sh && \
-    echo '        echo "停止 Apache..."' >> /usr/local/bin/apache-ctl.sh && \
-    echo '        /usr/local/bin/supervisorctl stop apache' >> /usr/local/bin/apache-ctl.sh && \
-    echo '        ;;' >> /usr/local/bin/apache-ctl.sh && \
-    echo '    restart)' >> /usr/local/bin/apache-ctl.sh && \
-    echo '        echo "重启 Apache..."' >> /usr/local/bin/apache-ctl.sh && \
-    echo '        /usr/local/bin/supervisorctl restart apache' >> /usr/local/bin/apache-ctl.sh && \
-    echo '        ;;' >> /usr/local/bin/apache-ctl.sh && \
-    echo '    reload)' >> /usr/local/bin/apache-ctl.sh && \
-    echo '        echo "重新加载 Apache 配置..."' >> /usr/local/bin/apache-ctl.sh && \
-    echo '        /usr/local/bin/supervisorctl signal HUP apache' >> /usr/local/bin/apache-ctl.sh && \
-    echo '        ;;' >> /usr/local/bin/apache-ctl.sh && \
-    echo '    status)' >> /usr/local/bin/apache-ctl.sh && \
-    echo '        echo "Apache 状态:"' >> /usr/local/bin/apache-ctl.sh && \
-    echo '        /usr/local/bin/supervisorctl status apache' >> /usr/local/bin/apache-ctl.sh && \
-    echo '        ;;' >> /usr/local/bin/apache-ctl.sh && \
-    echo '    configtest)' >> /usr/local/bin/apache-ctl.sh && \
-    echo '        echo "检查 Apache 配置..."' >> /usr/local/bin/apache-ctl.sh && \
-    echo '        /usr/local/apache2/bin/httpd -t' >> /usr/local/bin/apache-ctl.sh && \
-    echo '        ;;' >> /usr/local/bin/apache-ctl.sh && \
-    echo '    *)' >> /usr/local/bin/apache-ctl.sh && \
-    echo '        echo "用法: $0 {start|stop|restart|reload|status|configtest}"' >> /usr/local/bin/apache-ctl.sh && \
-    echo '        exit 1' >> /usr/local/bin/apache-ctl.sh && \
-    echo '        ;;' >> /usr/local/bin/apache-ctl.sh && \
-    echo 'esac' >> /usr/local/bin/apache-ctl.sh
+# # ================================
+# # 创建管理脚本
+# # ================================
+# RUN set -eux && \
+#     echo "=== 创建管理脚本 ===" && \
+#     echo '#!/bin/bash' > /usr/local/bin/apache-ctl.sh && \
+#     echo '# Apache 管理脚本' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '' >> /usr/local/bin/apache-ctl.sh && \
+#     echo 'case "$1" in' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '    start)' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '        echo "启动 Apache..."' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '        /usr/local/bin/supervisorctl start apache' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '        ;;' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '    stop)' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '        echo "停止 Apache..."' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '        /usr/local/bin/supervisorctl stop apache' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '        ;;' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '    restart)' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '        echo "重启 Apache..."' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '        /usr/local/bin/supervisorctl restart apache' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '        ;;' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '    reload)' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '        echo "重新加载 Apache 配置..."' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '        /usr/local/bin/supervisorctl signal HUP apache' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '        ;;' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '    status)' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '        echo "Apache 状态:"' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '        /usr/local/bin/supervisorctl status apache' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '        ;;' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '    configtest)' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '        echo "检查 Apache 配置..."' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '        /usr/local/apache2/bin/httpd -t' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '        ;;' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '    *)' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '        echo "用法: $0 {start|stop|restart|reload|status|configtest}"' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '        exit 1' >> /usr/local/bin/apache-ctl.sh && \
+#     echo '        ;;' >> /usr/local/bin/apache-ctl.sh && \
+#     echo 'esac' >> /usr/local/bin/apache-ctl.sh
 
-RUN chmod +x /usr/local/bin/apache-ctl.sh
+# RUN chmod +x /usr/local/bin/apache-ctl.sh
 
 # ================================
 # 清理构建文件

@@ -333,12 +333,19 @@ RUN set -eux && \
     make -j${MAKE_PARALLEL_JOBS} && \
     echo "=== 安装 Apache ===" && \
     make install && \
+    echo "=== 安装 Apache 配置文件 ===" && \
+    make install-conf && \
+    echo "=== 验证安装结果 ===" && \
+    ls -la ${APACHE_PREFIX}/conf/ && \
     echo "=== Apache HTTP Server 编译安装完成 ==="
 
 # ================================
 # 配置 Apache
 # ================================
 RUN set -eux && \
+    echo "=== 验证 Apache 配置文件 ===" && \
+    ls -la ${APACHE_PREFIX}/conf/ && \
+    test -f ${APACHE_PREFIX}/conf/httpd.conf && \
     echo "=== 配置 Apache HTTP Server ===" && \
     # 创建基本配置
     sed -i "s/^#ServerName .*/ServerName ${APACHE_SERVER_NAME}:${APACHE_LISTEN_PORT}/" ${APACHE_PREFIX}/conf/httpd.conf && \
@@ -727,9 +734,9 @@ RUN set -eux && \
 # ================================
 # 设置环境变量和路径
 # ================================
-ENV PATH=${APACHE_PREFIX}/bin:${APR_PREFIX}/bin:${APR_UTIL_PREFIX}/bin:${PCRE_PREFIX}/bin:${PATH:-/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin}
-ENV LD_LIBRARY_PATH=${APACHE_PREFIX}/lib:${APR_PREFIX}/lib:${APR_UTIL_PREFIX}/lib:${PCRE_PREFIX}/lib:${LD_LIBRARY_PATH:-}
-ENV PKG_CONFIG_PATH=${APACHE_PREFIX}/lib/pkgconfig:${APR_PREFIX}/lib/pkgconfig:${APR_UTIL_PREFIX}/lib/pkgconfig:${PCRE_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH:-}
+ENV PATH=${APACHE_PREFIX}/bin:${APR_PREFIX}/bin:${APR_UTIL_PREFIX}/bin:${PCRE_PREFIX}/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV LD_LIBRARY_PATH=${APACHE_PREFIX}/lib:${APR_PREFIX}/lib:${APR_UTIL_PREFIX}/lib:${PCRE_PREFIX}/lib
+ENV PKG_CONFIG_PATH=${APACHE_PREFIX}/lib/pkgconfig:${APR_PREFIX}/lib/pkgconfig:${APR_UTIL_PREFIX}/lib/pkgconfig:${PCRE_PREFIX}/lib/pkgconfig
 
 # ================================
 # 暴露端口

@@ -336,7 +336,7 @@ RUN set -eux && \
     echo "=== 安装 Apache 配置文件 ===" && \
     make install-conf && \
     echo "=== 验证安装结果 ===" && \
-    ls -la ${APACHE_PREFIX}/conf/ && \
+    # ls -la ${APACHE_PREFIX}/conf/ && \
     echo "=== Apache HTTP Server 编译安装完成 ==="
 
 # ================================

@@ -55,7 +55,5 @@ cd $commonName/bin || exit 1
 cp -u *.svg /usr/share/pixmaps/$2.svg
 cp -u $jbiDir/applications/$commonName.desktop /usr/share/applications/
 cp -u $jbiDir/applications/$commonName.desktop $HOME/Desktop/
-# install -m0755 $jbiDir/jetbrains-$commonName /usr/local/bin/jetbrains-$commonName
-
 # 安装完成提示
 echo "Software Installed"

@@ -54,6 +54,7 @@ cd $commonName/bin || exit 1
 # 以下为可选操作（已注释），如复制图标、desktop 文件、安装启动脚本等
 cp -u *.svg /usr/share/pixmaps/$2.svg
 cp -u $jbiDir/applications/$commonName.desktop /usr/share/applications/
+cp -u $jbiDir/applications/$commonName.desktop $HOME/Desktop/
 # install -m0755 $jbiDir/jetbrains-$commonName /usr/local/bin/jetbrains-$commonName
 
 # 安装完成提示

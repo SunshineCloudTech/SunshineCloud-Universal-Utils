@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+# sed -i 's/\r$//' Jetbrains-Installer/software_install.sh
 # 该脚本用于自动化安装 JetBrains 产品的归档包
 # 参数说明：
 # $1 - 归档包路径（.tar.gz 文件）

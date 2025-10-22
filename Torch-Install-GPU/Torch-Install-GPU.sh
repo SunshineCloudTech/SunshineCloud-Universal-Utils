@@ -128,7 +128,42 @@ main() {
     # 卸载现有版本（如果需要）
     if [[ "$FORCE_REINSTALL" == "true" ]]; then
         log_info "卸载现有版本..."
-        uv pip uninstall torch torchvision torchaudio -y 2>/dev/null || log_warn "未发现现有安装"
+        
+        # 首先尝试正常卸载
+        uv pip uninstall torch torchvision torchaudio -y 2>/dev/null || log_warn "正常卸载失败或未发现现有安装"
+        
+        # 强制清理残留文件
+        log_info "清理残留文件..."
+        
+        # 获取 Python site-packages 路径
+        local site_packages=$(python3 -c "import site; print(site.getsitepackages()[0])" 2>/dev/null)
+        if [[ -n "$site_packages" ]]; then
+            log_info "清理目录: $site_packages"
+            
+            # 删除 PyTorch 相关目录和文件
+            rm -rf "$site_packages"/torch* 2>/dev/null || true
+            rm -rf "$site_packages"/nvidia* 2>/dev/null || true
+            rm -rf "$site_packages"/triton* 2>/dev/null || true
+            rm -rf "$site_packages"/*torch* 2>/dev/null || true
+            
+            # 清理 .dist-info 目录
+            rm -rf "$site_packages"/torch*.dist-info 2>/dev/null || true
+            rm -rf "$site_packages"/torchvision*.dist-info 2>/dev/null || true
+            rm -rf "$site_packages"/torchaudio*.dist-info 2>/dev/null || true
+            rm -rf "$site_packages"/nvidia*.dist-info 2>/dev/null || true
+            rm -rf "$site_packages"/triton*.dist-info 2>/dev/null || true
+            
+            log_info "残留文件清理完成"
+        else
+            log_warn "无法获取 site-packages 路径，跳过文件清理"
+        fi
+        
+        # 清理 pip 缓存
+        log_info "清理安装缓存..."
+        if command -v pip3 &> /dev/null; then
+            pip3 cache purge 2>/dev/null || true
+        fi
+        uv cache clean 2>/dev/null || true
     fi
     
     # 安装
@@ -136,11 +171,23 @@ main() {
     local install_cmd="uv pip install torch==${TORCH_VERSION} torchvision==${TORCHVISION_VERSION} torchaudio==${TORCHAUDIO_VERSION} --index-url ${INDEX_URL}"
     
     # 添加常用 CI/CD 参数
-    install_cmd="${install_cmd} --system"
+    install_cmd="${install_cmd} --system --no-cache-dir --force-reinstall --no-deps"
     
     log_info "执行: ${install_cmd}"
     
     if eval $install_cmd; then
+        log_info "PyTorch 核心包安装成功，开始安装依赖..."
+        
+        # 单独安装依赖，避免冲突
+        local deps_cmd="uv pip install --system --no-cache-dir --index-url ${INDEX_URL}"
+        deps_cmd="${deps_cmd} nvidia-cuda-runtime-cu12 nvidia-cuda-cupti-cu12 nvidia-cudnn-cu12"
+        deps_cmd="${deps_cmd} nvidia-cublas-cu12 nvidia-cufft-cu12 nvidia-curand-cu12"
+        deps_cmd="${deps_cmd} nvidia-cusolver-cu12 nvidia-cusparse-cu12 nvidia-nccl-cu12"
+        deps_cmd="${deps_cmd} nvidia-nvtx-cu12 triton"
+        
+        log_info "安装 CUDA 依赖: ${deps_cmd}"
+        eval $deps_cmd || log_warn "部分依赖安装可能失败，但不影响核心功能"
+        
         log_info "安装成功 ✅"
     else
         log_error "安装失败 ❌"

@@ -136,7 +136,7 @@ main() {
     local install_cmd="uv pip install torch==${TORCH_VERSION} torchvision==${TORCHVISION_VERSION} torchaudio==${TORCHAUDIO_VERSION} --index-url ${INDEX_URL}"
     
     # 添加常用 CI/CD 参数
-    install_cmd="${install_cmd} --no-cache-dir --system"
+    install_cmd="${install_cmd} --system"
     
     log_info "执行: ${install_cmd}"
     

@@ -128,15 +128,15 @@ main() {
     # 卸载现有版本（如果需要）
     if [[ "$FORCE_REINSTALL" == "true" ]]; then
         log_info "卸载现有版本..."
-        pip uninstall torch torchvision torchaudio -y 2>/dev/null || log_warn "未发现现有安装"
+        uv pip uninstall torch torchvision torchaudio -y 2>/dev/null || log_warn "未发现现有安装"
     fi
     
     # 安装
     log_info "开始安装..."
-    local install_cmd="pip install torch==${TORCH_VERSION} torchvision==${TORCHVISION_VERSION} torchaudio==${TORCHAUDIO_VERSION} --index-url ${INDEX_URL}"
+    local install_cmd="uv pip install torch==${TORCH_VERSION} torchvision==${TORCHVISION_VERSION} torchaudio==${TORCHAUDIO_VERSION} --index-url ${INDEX_URL}"
     
     # 添加常用 CI/CD 参数
-    install_cmd="${install_cmd} --no-cache-dir --disable-pip-version-check"
+    install_cmd="${install_cmd} --no-cache-dir --system"
     
     log_info "执行: ${install_cmd}"
     

@@ -11,7 +11,7 @@ set -e  # 遇到错误时退出
 CUDA_VERSION=${CUDA_VERSION:-"cu126"}  # 支持环境变量
 INDEX_URL="https://download.pytorch.org/whl/${CUDA_VERSION}"
 FORCE_REINSTALL=${FORCE_REINSTALL:-"true"}  # CI/CD 默认强制重装
-SKIP_VERIFICATION=${SKIP_VERIFICATION:-"false"}  # 是否跳过验证
+TORCH_GPU_SKIP_VERIFICATION=${TORCH_GPU_SKIP_VERIFICATION:-"false"}  # 是否跳过验证
 
 # 日志函数
 log_info() {
@@ -62,7 +62,7 @@ get_latest_version() {
 
 # 验证安装
 verify_installation() {
-    if [[ "$SKIP_VERIFICATION" == "true" ]]; then
+    if [[ "$TORCH_GPU_SKIP_VERIFICATION" == "true" ]]; then
         log_info "跳过安装验证"
         return 0
     fi

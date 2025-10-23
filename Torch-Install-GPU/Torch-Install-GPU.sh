@@ -8,8 +8,8 @@
 set -e  # 遇到错误时退出
 
 # 配置
-CUDA_VERSION=${CUDA_VERSION:-"cu126"}  # 支持环境变量
-INDEX_URL="https://download.pytorch.org/whl/${CUDA_VERSION}"
+INSTALL_CUDA_VERSION=${INSTALL_CUDA_VERSION:-"cu126"}  # 支持环境变量
+INDEX_URL="https://download.pytorch.org/whl/${INSTALL_CUDA_VERSION}"
 FORCE_REINSTALL=${FORCE_REINSTALL:-"true"}  # CI/CD 默认强制重装
 TORCH_GPU_SKIP_VERIFICATION=${TORCH_GPU_SKIP_VERIFICATION:-"false"}  # 是否跳过验证
 
@@ -105,7 +105,7 @@ except Exception as e:
 # 主函数
 main() {
     log_info "开始 PyTorch CUDA 自动化安装"
-    log_info "CUDA 版本: ${CUDA_VERSION}"
+    log_info "CUDA 版本: ${INSTALL_CUDA_VERSION}"
     log_info "运行环境: CI/CD"
     
     # 检查环境
